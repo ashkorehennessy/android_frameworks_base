@@ -307,6 +307,7 @@ public class KeyguardIndicationController {
                     showFaceUnlockRecognizingMessage();
                 } else if (msg.what == MSG_HIDE_RECOGNIZING_FACE){
                     hideFaceUnlockRecognizingMessage();
+                }
             }
         };
 
@@ -847,9 +848,6 @@ public class KeyguardIndicationController {
                                     R.string.face_unlock_recognizing);
         mBiometricMessage = faceUnlockMessage;
 
-        mHandler.removeMessages(MSG_SHOW_ACTION_TO_UNLOCK);
-        mHandler.removeMessages(MSG_HIDE_BIOMETRIC_MESSAGE);
-
         mRotateTextViewController.updateIndication(
                 INDICATION_TYPE_BIOMETRIC_MESSAGE,
                 new KeyguardIndication.Builder()
@@ -873,9 +871,7 @@ public class KeyguardIndicationController {
         String faceUnlockMessage = mContext.getResources().getString(
             R.string.face_unlock_recognizing);
         if (mBiometricMessage != null && mBiometricMessage == faceUnlockMessage) {
-            mBiometricMessage = null;
-            mHandler.removeMessages(MSG_HIDE_BIOMETRIC_MESSAGE);
-            updateBiometricMessage();
+            hideBiometricMessage();
         }
     }
 
